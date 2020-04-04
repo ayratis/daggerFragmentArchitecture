@@ -8,8 +8,23 @@ import io.reactivex.disposables.Disposable
 
 open class BaseFragment(@LayoutRes containerLayoutId: Int) : Fragment(containerLayoutId) {
 
+    companion object {
+        private const val STATE_SCOPE_NAME = "state_scope_name"
+    }
+
     private var instanceStateSaved: Boolean = false
     private val disposeOnPauseDisposables = CompositeDisposable()
+    lateinit var fragmentInstanceKey: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        fragmentInstanceKey = savedInstanceState?.getString(STATE_SCOPE_NAME)
+            ?: "${javaClass.simpleName}_${hashCode()}"
+        onFirstCreate()
+        super.onCreate(savedInstanceState)
+    }
+
+    protected open fun onFirstCreate() {
+    }
 
     override fun onResume() {
         super.onResume()
@@ -19,6 +34,7 @@ open class BaseFragment(@LayoutRes containerLayoutId: Int) : Fragment(containerL
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         instanceStateSaved = true
+        outState.putString(STATE_SCOPE_NAME, fragmentInstanceKey)
     }
 
     override fun onPause() {

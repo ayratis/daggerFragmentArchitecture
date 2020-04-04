@@ -25,20 +25,20 @@ interface FlowComponent {
         ): FlowComponent
     }
 
-    class Manager(private val flowComponentFactory: Factory) {
-        private var component: FlowComponent? = null
-
-        fun openComponent(name: String): FlowComponent {
-            if (component == null) {
-                component = flowComponentFactory.create(name)
-            }
-            return component!!
-        }
-
-        fun closeComponent() {
-            component = null
-        }
-    }
+//    class Manager(private val flowComponentFactory: Factory) {
+//        private var component: FlowComponent? = null
+//
+//        fun openComponent(name: String): FlowComponent {
+//            if (component == null) {
+//                component = flowComponentFactory.create(name)
+//            }
+//            return component!!
+//        }
+//
+//        fun closeComponent() {
+//            component = null
+//        }
+//    }
 
     @Module(subcomponents = [MyComponent::class])
     abstract class FlowModule {

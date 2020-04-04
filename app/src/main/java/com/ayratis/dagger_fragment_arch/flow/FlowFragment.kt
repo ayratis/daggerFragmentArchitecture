@@ -5,12 +5,13 @@ import android.view.View
 import androidx.fragment.app.FragmentFactory
 import com.ayratis.dagger_fragment_arch.R
 import com.ayratis.dagger_fragment_arch.system.BaseFragment
+import com.ayratis.dagger_fragment_arch.system.FlowComponentManager
 import com.ayratis.dagger_fragment_arch.system.navigtation.Coordinator
 import kotlinx.android.synthetic.main.fragment_flow.*
 import javax.inject.Inject
 
 class FlowFragment @Inject constructor(
-    private val flowComponentManager: FlowComponent.Manager
+    private val flowComponentManager: FlowComponentManager
 ) : BaseFragment(R.layout.fragment_flow) {
 
     companion object {
@@ -25,7 +26,7 @@ class FlowFragment @Inject constructor(
         requireArguments().getInt(ARG_FLOW_COLOR)
     }
     private val flowComponent: FlowComponent by lazy {
-        flowComponentManager.openComponent(flowName)
+        flowComponentManager.openComponent(fragmentInstanceKey, flowName)
     }
     private val fragmentFactory: FragmentFactory by lazy {
         flowComponent.fragmentFactory()
@@ -37,9 +38,8 @@ class FlowFragment @Inject constructor(
         FlowNavigator(childFragmentManager)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onFirstCreate() {
         childFragmentManager.fragmentFactory = fragmentFactory
-        super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,6 +66,6 @@ class FlowFragment @Inject constructor(
     }
 
     override fun onCleared() {
-        flowComponentManager.closeComponent()
+        flowComponentManager.closeComponent(fragmentInstanceKey)
     }
 }

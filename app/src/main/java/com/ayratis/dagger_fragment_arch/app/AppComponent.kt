@@ -6,10 +6,13 @@ import androidx.fragment.app.FragmentFactory
 import androidx.lifecycle.ViewModelProvider
 import com.ayratis.dagger_fragment_arch.flow.FlowComponent
 import com.ayratis.dagger_fragment_arch.flow.FlowFragment
+import com.ayratis.dagger_fragment_arch.system.AppFragmentFactory
 import com.ayratis.dagger_fragment_arch.system.AppViewModelFactory
 import com.ayratis.dagger_fragment_arch.system.FragmentKey
-import com.ayratis.dagger_fragment_arch.system.AppFragmentFactory
-import dagger.*
+import dagger.Binds
+import dagger.BindsInstance
+import dagger.Component
+import dagger.Module
 import dagger.multibindings.IntoMap
 import javax.inject.Singleton
 
@@ -38,12 +41,12 @@ interface AppComponent {
         @FragmentKey(FlowFragment::class)
         abstract fun bindFlowFragment(fragment: FlowFragment): Fragment
 
-        companion object {
-            @Provides
-            @Singleton
-            fun provideFlowComponentManager(
-                flowComponentFactory: FlowComponent.Factory
-            ): FlowComponent.Manager = FlowComponent.Manager(flowComponentFactory)
-        }
+//        companion object {
+//            @Provides
+//            @Singleton
+//            fun provideFlowComponentManager(
+//                flowComponentFactory: FlowComponent.Factory
+//            ): FlowComponentManager = FlowComponent.Manager(flowComponentFactory)
+//        }
     }
 }

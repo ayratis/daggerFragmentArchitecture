@@ -1,12 +1,11 @@
 package com.ayratis.dagger_fragment_arch.app
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.ayratis.dagger_fragment_arch.R
 import com.ayratis.dagger_fragment_arch.flow.FlowFragment
 import com.ayratis.dagger_fragment_arch.system.BaseFragment
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,10 +26,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            selectTab(TAG_FLOW_1)
+//            selectTab(TAG_FLOW_1)
+            supportFragmentManager.beginTransaction()
+                .replace(
+                    R.id.fragmentContainer,
+                    FlowFragment::class.java,
+                    createFlowFragmentBundle(TAG_FLOW_1),
+                    TAG_FLOW_1
+                ).commitNow()
+
+            supportFragmentManager.beginTransaction()
+                .replace(
+                    R.id.fragmentContainer2,
+                    FlowFragment::class.java,
+                    createFlowFragmentBundle(TAG_FLOW_2),
+                    TAG_FLOW_2
+                ).commitNow()
         }
-        flow1Button.setOnClickListener { selectTab(TAG_FLOW_1) }
-        flow2Button.setOnClickListener { selectTab(TAG_FLOW_2) }
+//        flow1Button.setOnClickListener { selectTab(TAG_FLOW_1) }
+//        flow2Button.setOnClickListener { selectTab(TAG_FLOW_2) }
     }
 
     private fun selectTab(tag: String) {
