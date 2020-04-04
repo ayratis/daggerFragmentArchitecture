@@ -1,0 +1,2 @@
+rootProject.name='DaggerFragmentArch'
+include ':app'
